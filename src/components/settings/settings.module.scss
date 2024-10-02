@@ -1,0 +1,44 @@
+.settings_container {
+  width: 100%;
+  max-width: 769px;
+  min-width: 310px;
+  background-color: #191c21;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.settings_title1 {
+  font-size: 2rem;
+}
+
+.settings_title2 {
+  font-size: 1.5rem;
+}
+
+.settings_language {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 1rem;
+}
+
+.language {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
+  width: 4rem;
+  border-radius: 0.5rem;
+  border: #333a45 solid 2px;
+  
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &.active {
+    border: #58c4dc solid 2px;
+  }
+}
