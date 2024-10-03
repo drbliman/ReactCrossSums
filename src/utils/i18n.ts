@@ -14,20 +14,35 @@ i18n
     resources: {
       ru: {
         translation: {
-          part1: "Настройки",
-          part2: "Язык",
+          settings: "Настройки",
+          language: "Язык",
+          playingField: "Игровое поле",
+          gameMode: "Режим игры",
+          sum: "Сумма",
+          subtraction: "Разность",
+          multiplication: "Умножение",
         },
       },
       en: {
         translation: {
-          part1: "Settings",
-          part2: "Language",
+          settings: "Settings",
+          language: "Language",
+          playingField: "Playing field",
+          gameMode: "Game mode",
+          sum: "Sum",
+          subtraction: "Subtraction",
+          multiplication: "Multiplication",
         },
       },
       tr: {
         translation: {
-          part1: "Ayarlar",
-          part2: "Dil",
+          settings: "Ayarlar",
+          language: "Dil",
+          playingField: "Oyun alanı",
+          gameMode: "Oyun modu",
+          sum: "Toplam",
+          subtraction: "Çıkarma",
+          multiplication: "Çarpma",
         },
       },
     },

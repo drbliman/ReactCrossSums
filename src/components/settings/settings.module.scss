@@ -1,11 +1,18 @@
 .settings_container {
-  width: 100%;
+  position: absolute;
+  top: -100%;
+  width: 95%;
   max-width: 769px;
   min-width: 310px;
   background-color: #191c21;
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
+  transition: 0.5s;
+
+  &.active {
+    top: 5rem;
+  }
 }
 
 .settings_title1 {
@@ -16,11 +23,16 @@
   font-size: 1.5rem;
 }
 
-.settings_language {
+.settings_language,
+.settings_playing_field {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   margin: 1rem;
+}
+
+.settings_playing_field {
+  flex-wrap: wrap;
 }
 
 .language {
@@ -28,7 +40,8 @@
   align-items: center;
   justify-content: center;
   height: 2rem;
-  width: 4rem;
+  padding: 0 1rem 0 1rem;
+  margin: 0.5rem;
   border-radius: 0.5rem;
   border: #333a45 solid 2px;
   
@@ -40,5 +53,57 @@
 
   &.active {
     border: #58c4dc solid 2px;
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  min-width: 320px;
+
+  @media (max-width: 400px)  {
+    justify-content: space-around;
+  }
+}
+
+.img,
+.img_cross {
+  width: 3rem;
+  height: 3rem;
+  margin: 1rem;
+
+  @media (max-width: 400px)  {
+    width: 2rem;
+    height: 2rem;
+    margin: 0.5rem;
+  }
+  
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      cursor: pointer;
+      animation-name: swaying;
+      animation-duration: 0.4s;
+    }
+  }
+}
+
+.img_cross {
+  display: flex;
+  align-self: flex-end;
+  margin: 1rem 1rem 0 0;
+}
+
+@keyframes swaying {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+  33% {
+    transform: rotate(20deg);
+  }
+  66% {
+    transform: rotate(-20deg);
   }
 }

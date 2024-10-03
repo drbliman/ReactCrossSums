@@ -5,4 +5,11 @@ export const SVG_SRC = {
   book: "../public/svg/book.svg",
   idea: "../public/svg/idea.svg",
   brush: "../public/svg/brush.svg",
+  cross: "../public/svg/cross.svg",
+};
+
+export const GAME_MODE = {
+  mode_1: "sum",
+  mode_2: "subtraction",
+  mode_3: "multiplication",
 };
