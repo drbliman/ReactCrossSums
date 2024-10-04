@@ -7,6 +7,7 @@ import { RootState } from "../../store";
 import styles from "./settings.module.scss";
 import { setGameMode } from "../../utils/slices/GameModeSlice";
 import { setVisibilitySettings } from "../../utils/slices/visibilitySettingsSlice";
+import { LANGUAGES } from "../../utils/constants";
 
 export default function Settings() {
   const { t, i18n } = useTranslation();
@@ -20,9 +21,10 @@ export default function Settings() {
   const visibilitySettings = useSelector(
     (state: RootState) => state.visibilitySettings.visibilitySettings,
   );
+
   const dispatch = useDispatch();
 
-  const handleSize = (n: number) => {
+  const handleFieldSizeChange = (n: number) => {
     dispatch(setField(n));
   };
 
@@ -31,11 +33,7 @@ export default function Settings() {
   };
 
   const handleVisibilitySettings = () => {
-    if (visibilitySettings) {
-      dispatch(setVisibilitySettings(false));
-    } else {
-      dispatch(setVisibilitySettings(true));
-    }
+    dispatch(setVisibilitySettings(!visibilitySettings));
   };
 
   const handleLanguageChange = (lang: string) => {
@@ -58,41 +56,41 @@ export default function Settings() {
         <div className={styles.settings_title2}>{t("language")}</div>
         <div className={styles.settings_language}>
           <div
-            className={`${styles.language} ${activeLanguage === "ru" ? styles.active : ""}`}
-            onClick={() => handleLanguageChange("ru")}
+            className={`${styles.language} ${activeLanguage === LANGUAGES.ru.code ? styles.active : ""}`}
+            onClick={() => handleLanguageChange(LANGUAGES.ru.code)}
           >
-            RU
+            {LANGUAGES.ru.label}
           </div>
           <div
-            className={`${styles.language} ${activeLanguage === "en" ? styles.active : ""}`}
-            onClick={() => handleLanguageChange("en")}
+            className={`${styles.language} ${activeLanguage === LANGUAGES.en.code ? styles.active : ""}`}
+            onClick={() => handleLanguageChange(LANGUAGES.en.code)}
           >
-            EN
+            {LANGUAGES.en.label}
           </div>
           <div
-            className={`${styles.language} ${activeLanguage === "tr" ? styles.active : ""}`}
-            onClick={() => handleLanguageChange("tr")}
+            className={`${styles.language} ${activeLanguage === LANGUAGES.tr.code ? styles.active : ""}`}
+            onClick={() => handleLanguageChange(LANGUAGES.tr.code)}
           >
-            TR
+            {LANGUAGES.tr.label}
           </div>
         </div>
         <div className={styles.settings_title2}>{t("playingField")}</div>
         <div className={styles.settings_playing_field}>
           <div
             className={`${styles.language} ${fieldSize === 5 ? styles.active : ""}`}
-            onClick={() => handleSize(5)}
+            onClick={() => handleFieldSizeChange(5)}
           >
             5 x 5
           </div>
           <div
             className={`${styles.language} ${fieldSize === 6 ? styles.active : ""}`}
-            onClick={() => handleSize(6)}
+            onClick={() => handleFieldSizeChange(6)}
           >
             6 x 6
           </div>
           <div
             className={`${styles.language} ${fieldSize === 7 ? styles.active : ""}`}
-            onClick={() => handleSize(7)}
+            onClick={() => handleFieldSizeChange(7)}
           >
             7 x 7
           </div>
@@ -104,12 +102,6 @@ export default function Settings() {
             onClick={() => handleGameMode(GAME_MODE.mode_1)}
           >
             {t("sum")}
-          </div>
-          <div
-            className={`${styles.language} ${gameMode === GAME_MODE.mode_2 ? styles.active : ""}`}
-            onClick={() => handleGameMode(GAME_MODE.mode_2)}
-          >
-            {t("subtraction")}
           </div>
           <div
             className={`${styles.language} ${gameMode === GAME_MODE.mode_3 ? styles.active : ""}`}

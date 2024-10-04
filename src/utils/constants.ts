@@ -6,10 +6,17 @@ export const SVG_SRC = {
   idea: "../public/svg/idea.svg",
   brush: "../public/svg/brush.svg",
   cross: "../public/svg/cross.svg",
+  play: "../public/svg/play.svg",
 };
 
 export const GAME_MODE = {
   mode_1: "sum",
   mode_2: "subtraction",
   mode_3: "multiplication",
+};
+
+export const LANGUAGES = {
+  ru: { code: "ru", label: "RU" },
+  en: { code: "en", label: "EN" },
+  tr: { code: "tr", label: "TR" },
 };

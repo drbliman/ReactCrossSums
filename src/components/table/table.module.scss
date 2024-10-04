@@ -1,0 +1,29 @@
+.th {
+  width: 2rem;
+  height: 2rem;
+  background-color: rgb(51,58,69);
+  border: 2px solid #333a45;
+  border-radius: 0.5rem;
+  user-select: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+
+  &.active {
+    border: 2px solid #58c4dc;
+  }
+
+  &.none {
+    background-color: rgba(51,58,69, 0.3);
+    border: 2px solid rgba(51,58,69, 0.3);
+    color: gray;
+  }
+}
+
+.th_one {
+  width: 2rem;
+  height: 2rem;
+  background-color: #191c21;
+  border: 2px solid #191c21;
+  border-radius: 0.5rem;
+  user-select: none;
+}

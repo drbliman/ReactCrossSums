@@ -15,12 +15,7 @@ export default function Header() {
   const dispatch = useDispatch();
 
   const handleVisibilitySettings = () => {
-    if (visibilitySettings) {
-      dispatch(setVisibilitySettings(false));
-    } else {
-      dispatch(setVisibilitySettings(true));
-    }
-    console.log(visibilitySettings);
+    dispatch(setVisibilitySettings(!visibilitySettings));
   };
 
   const handleClickMusic = () => {
