@@ -6,7 +6,6 @@ import Tbody from "./tbody";
 
 export default function Table() {
   const [loader, setLoader] = React.useState(true);
-  // const fieldSize = useSelector((state: RootState) => state.field.size);
   const arrayNumbers = useSelector(
     (state: RootState) => state.arrayNumbers.arrayNumbers,
   );
@@ -29,7 +28,11 @@ export default function Table() {
     <>
       <table>
         <Thead numbers={arrayAnswers[0]}></Thead>
-        <Tbody numbers={arrayAnswers[1]} arrayNumbers={arrayNumbers}></Tbody>
+        <Tbody
+          numbersCheck={arrayAnswers[0]}
+          numbers={arrayAnswers[1]}
+          arrayNumbers={arrayNumbers}
+        ></Tbody>
       </table>
     </>
   );

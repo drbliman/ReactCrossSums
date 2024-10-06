@@ -26,4 +26,8 @@
   border: 2px solid #191c21;
   border-radius: 0.5rem;
   user-select: none;
+
+  &.active {
+    border: 2px solid #58c4dc;
+  }
 }

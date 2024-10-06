@@ -23,5 +23,49 @@ export default function createGameBoolean(fieldSize: number) {
     gameField.push(shuffledArray.slice(i * fieldSize, (i + 1) * fieldSize));
   }
 
+  for (let i = 0; i < fieldSize; i++) {
+    if (!gameField[i].includes(true)) {
+      const randomIndex = randomInteger(0, fieldSize - 1);
+      gameField[i][randomIndex] = true;
+    }
+  }
+
+  for (let j = 0; j < fieldSize; j++) {
+    let hasTrueInColumn = false;
+    for (let i = 0; i < fieldSize; i++) {
+      if (gameField[i][j] === true) {
+        hasTrueInColumn = true;
+        break;
+      }
+    }
+
+    if (!hasTrueInColumn) {
+      const randomRow = randomInteger(0, fieldSize - 1);
+      gameField[randomRow][j] = true;
+    }
+  }
+
+  for (let i = 0; i < fieldSize; i++) {
+    if (!gameField[i].includes(false)) {
+      const randomIndex = randomInteger(0, fieldSize - 1);
+      gameField[i][randomIndex] = false;
+    }
+  }
+
+  for (let j = 0; j < fieldSize; j++) {
+    let hasFalseInColumn = false;
+    for (let i = 0; i < fieldSize; i++) {
+      if (gameField[i][j] === false) {
+        hasFalseInColumn = true;
+        break;
+      }
+    }
+
+    if (!hasFalseInColumn) {
+      const randomRow = randomInteger(0, fieldSize - 1);
+      gameField[randomRow][j] = false;
+    }
+  }
+
   return gameField;
 }
