@@ -5,6 +5,7 @@ import visibilitySettingsReducer from "./utils/slices/visibilitySettingsSlice";
 import playingFieldReducer from "./utils/slices/playingFieldSlice";
 import arrayNumbersReducer from "./utils/slices/arrayNumbersSlice";
 import theadReducer from "./utils/slices/theadSlice";
+import innerWidthReducer from "./utils/slices/innerWidthSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     playingField: playingFieldReducer,
     arrayNumbers: arrayNumbersReducer,
     thead: theadReducer,
+    innerWidth: innerWidthReducer,
   },
 });
 

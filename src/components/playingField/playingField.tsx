@@ -8,11 +8,33 @@ import {
 } from "../../utils/slices/arrayNumbersSlice";
 import { RootState } from "../../store";
 import { SVG_SRC } from "../../utils/constants";
+import { LIMITATION_NUMBERS } from "../../utils/constants";
 import Table from "../table/table";
 import styles from "./playingField.module.scss";
 import createGameNumbers from "../../utils/gameNumbers/createGameNumbers";
 import createGameBoolean from "../../utils/gameNumbers/createGameBoolean";
 import sumColumnsAndRows from "../../utils/gameNumbers/sumColumnsAndRows";
+import { setInnerWidth } from "../../utils/slices/innerWidthSlice";
+
+interface StateType {
+  cellStates: string[][];
+  resultStates: boolean[][];
+  rowIndex: number;
+  cellIndex: number;
+}
+
+export const StateContext = React.createContext<{
+  state: StateType;
+  setState: React.Dispatch<React.SetStateAction<StateType>>;
+}>({
+  state: {
+    cellStates: [],
+    resultStates: [],
+    rowIndex: 0,
+    cellIndex: 0,
+  },
+  setState: () => {},
+});
 
 export default function PlayingField() {
   const playingField = useSelector(
@@ -27,12 +49,36 @@ export default function PlayingField() {
   const arrayAnswers = useSelector(
     (state: RootState) => state.arrayNumbers.arrayAnswers,
   );
+  const innerWidth = useSelector(
+    (state: RootState) => state.innerWidth.innerWidth,
+  );
+  const limitationNumbers = useSelector(
+    (state: RootState) => state.innerWidth.limitationNumders,
+  );
+  const negativeNumbers = useSelector(
+    (state: RootState) => state.innerWidth.negativeNumbers,
+  );
   const fieldSize = useSelector((state: RootState) => state.field.size);
   const dispatch = useDispatch();
 
+  const [state, setState] = React.useState<StateType>({
+    cellStates: [],
+    resultStates: [],
+    rowIndex: 0,
+    cellIndex: 0,
+  });
+
   const handleClickPlay = () => {
     dispatch(setPlayingField(!playingField));
-    dispatch(setArrayNumbers(createGameNumbers(fieldSize)));
+    dispatch(
+      setArrayNumbers(
+        createGameNumbers(
+          fieldSize,
+          innerWidth[limitationNumbers],
+          negativeNumbers,
+        ),
+      ),
+    );
     dispatch(setArrayBoolean(createGameBoolean(fieldSize)));
   };
 
@@ -40,27 +86,45 @@ export default function PlayingField() {
     console.log(arrayNumbers);
     console.log(arrayBoolean);
     dispatch(setArrayAnswers(sumColumnsAndRows(arrayNumbers, arrayBoolean)));
+    setState({
+      cellStates: arrayNumbers.map((row) => row.map(() => "default")),
+      resultStates: arrayNumbers.map((row) => row.map(() => true)),
+      rowIndex: 0,
+      cellIndex: 0,
+    });
   }, [arrayNumbers, arrayBoolean, dispatch]);
 
   React.useEffect(() => {
     console.log(arrayAnswers);
   }, [arrayAnswers]);
 
+  React.useEffect(() => {
+    dispatch(
+      setInnerWidth(
+        window.innerWidth < 360
+          ? LIMITATION_NUMBERS.limit_1
+          : LIMITATION_NUMBERS.limit_2,
+      ),
+    );
+  }, []);
+
   return (
     <>
-      <div className={styles.playingField}>
-        <img
-          className={`${styles.imgPlay} ${playingField ? styles.none : ""}`}
-          src={SVG_SRC.play}
-          alt="play"
-          onClick={() => handleClickPlay()}
-        />
-        <div
-          className={`${styles.table_conteiner} ${!playingField ? styles.none : ""}`}
-        >
-          <Table></Table>
+      <StateContext.Provider value={{ state, setState }}>
+        <div className={styles.playingField}>
+          <img
+            className={`${styles.imgPlay} ${playingField ? styles.none : ""}`}
+            src={SVG_SRC.play}
+            alt="play"
+            onClick={() => handleClickPlay()}
+          />
+          <div
+            className={`${styles.table_conteiner} ${!playingField ? styles.none : ""}`}
+          >
+            <Table></Table>
+          </div>
         </div>
-      </div>
+      </StateContext.Provider>
     </>
   );
 }

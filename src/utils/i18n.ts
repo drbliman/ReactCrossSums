@@ -21,6 +21,8 @@ i18n
           sum: "Сумма",
           subtraction: "Разность",
           multiplication: "Умножение",
+          numbers: "Числа",
+          negativeNumbers: "Отрицательные числа",
         },
       },
       en: {
@@ -32,6 +34,8 @@ i18n
           sum: "Sum",
           subtraction: "Subtraction",
           multiplication: "Multiplication",
+          numbers: "Numbers",
+          negativeNumbers: "Negative numbers",
         },
       },
       tr: {
@@ -43,6 +47,8 @@ i18n
           sum: "Toplam",
           subtraction: "Çıkarma",
           multiplication: "Çarpma",
+          numbers: "Sayılar",
+          negativeNumbers: "Negatif sayılar",
         },
       },
     },

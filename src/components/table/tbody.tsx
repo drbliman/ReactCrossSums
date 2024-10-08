@@ -2,21 +2,18 @@ import React from "react";
 import styles from "./table.module.scss";
 import checkRow from "../../utils/gameNumbers/checkRow";
 import checkColumn from "../../utils/gameNumbers/checkColumn";
+import checkWinner from "../../utils/gameNumbers/checkWinner";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 import { setThead } from "../../utils/slices/theadSlice";
+import { StateContext } from "../playingField/playingField";
 
 export default function Tbody({
   numbersCheck,
   numbers,
   arrayNumbers,
 }: TbodyProps) {
-  const [state, setState] = React.useState({
-    cellStates: arrayNumbers.map((row) => row.map(() => "default")),
-    resultStates: arrayNumbers.map((row) => row.map(() => true)),
-    rowIndex: 0,
-    cellIndex: 0,
-  });
+  const { state, setState } = React.useContext(StateContext);
 
   const [firstStates, setThStates] = React.useState({
     thRowFirstStates: arrayNumbers.map(() => false),
@@ -25,6 +22,10 @@ export default function Tbody({
 
   const thColumnFirst = useSelector((state: RootState) => state.thead);
   const dispatch = useDispatch();
+
+  const arrayBoolean = useSelector(
+    (state: RootState) => state.arrayNumbers.arrayBoolean,
+  );
 
   React.useEffect(() => {
     dispatch(setThead(arrayNumbers.map(() => false)));
@@ -68,6 +69,11 @@ export default function Tbody({
         );
       }, 0);
 
+      setTimeout(
+        () => console.log(checkWinner(arrayBoolean, newResultStates)),
+        0,
+      );
+
       return {
         cellStates: newCellStates,
         resultStates: newResultStates,
@@ -78,6 +84,7 @@ export default function Tbody({
   };
 
   React.useEffect(() => {
+    console.log(state);
     setThStates((prevState) => {
       const newStates = prevState.thRowFirstStates.map((value, index) => {
         return index === state.rowIndex
@@ -88,6 +95,10 @@ export default function Tbody({
       return { ...prevState, thRowFirstStates: newStates };
     });
   }, [arrayNumbers, numbers, state]);
+
+  if (state.cellStates.length === 0 || state.resultStates.length === 0) {
+    return null;
+  }
 
   return (
     <>

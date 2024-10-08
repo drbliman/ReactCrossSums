@@ -3,7 +3,8 @@
   top: -100%;
   width: 95%;
   max-width: 769px;
-  min-width: 320px;
+  min-width: 310px;
+  max-height: calc(100vh - 7rem);
   background-color: #191c21;
   border-radius: 1rem;
   display: flex;
@@ -15,12 +16,21 @@
   }
 }
 
+.settings_hidden {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
 .settings_title1 {
   font-size: 2rem;
 }
 
 .settings_title2 {
   font-size: 1.5rem;
+}
+
+.settings_title3 {
+  font-size: 1.3rem;
 }
 
 .settings_language,
@@ -33,6 +43,44 @@
 
 .settings_playing_field {
   flex-wrap: wrap;
+}
+
+.negative_numbers {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 1rem;
+}
+
+.negative_numbers_controller {
+  position: relative;
+  height: 2rem;
+  width: 4rem;
+  background-color: #333a45;
+  border-radius: 2rem;
+  margin: 0 1rem 0 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0.2rem;
+    left: 0.2rem;
+    height: 1.6rem;
+    width: 1.6rem;
+    border-radius: 50%;
+    background-color: #191c21;
+    transition: left 0.3s, background-color 0.3s;
+  }
+
+  &.active {
+    &::after {
+      left: 2.2rem;
+      background-color: #58c4dc;
+    }
+  }
 }
 
 .language {
