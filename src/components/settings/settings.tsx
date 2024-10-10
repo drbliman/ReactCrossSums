@@ -5,10 +5,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { setField } from "../../utils/slices/fieldSlice";
 import { RootState } from "../../store";
 import styles from "./settings.module.scss";
-// import { setGameMode } from "../../utils/slices/GameModeSlice";
 import { setVisibilitySettings } from "../../utils/slices/visibilitySettingsSlice";
 import { setlimitatiomNumders } from "../../utils/slices/innerWidthSlice";
 import { setNegativeNumbers } from "../../utils/slices/innerWidthSlice";
+import { setPlayingField } from "../../utils/slices/playingFieldSlice";
 import { LANGUAGES } from "../../utils/constants";
 
 export default function Settings() {
@@ -19,7 +19,6 @@ export default function Settings() {
   );
 
   const fieldSize = useSelector((state: RootState) => state.field.size);
-  // const gameMode = useSelector((state: RootState) => state.gameMode.mode);
   const innerWidth = useSelector(
     (state: RootState) => state.innerWidth.innerWidth,
   );
@@ -37,11 +36,8 @@ export default function Settings() {
 
   const handleFieldSizeChange = (n: number) => {
     dispatch(setField(n));
+    dispatch(setPlayingField(false));
   };
-
-  // const handleGameMode = (mode: string) => {
-  //   dispatch(setGameMode(mode));
-  // };
 
   const handleVisibilitySettings = () => {
     dispatch(setVisibilitySettings(!visibilitySettings));
@@ -54,10 +50,12 @@ export default function Settings() {
 
   const handlelimitatiomNumders = (index: number) => {
     dispatch(setlimitatiomNumders(index));
+    dispatch(setPlayingField(false));
   };
 
   const handleNegativeNumbers = () => {
     dispatch(setNegativeNumbers(!negativeNumbers));
+    dispatch(setPlayingField(false));
   };
 
   return (
@@ -132,21 +130,6 @@ export default function Settings() {
             ></div>
             <div className={styles.settings_title3}>{t("negativeNumbers")}</div>
           </div>
-          {/* <div className={styles.settings_title2}>{t("gameMode")}</div>
-          <div className={styles.settings_playing_field}>
-            <div
-              className={`${styles.language} ${gameMode === GAME_MODE.mode_1 ? styles.active : ""}`}
-              onClick={() => handleGameMode(GAME_MODE.mode_1)}
-            >
-              {t("sum")}
-            </div>
-            <div
-              className={`${styles.language} ${gameMode === GAME_MODE.mode_3 ? styles.active : ""}`}
-              onClick={() => handleGameMode(GAME_MODE.mode_3)}
-            >
-              {t("multiplication")}
-            </div>
-          </div> */}
         </div>
       </div>
     </>

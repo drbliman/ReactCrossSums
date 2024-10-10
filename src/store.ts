@@ -1,21 +1,23 @@
 import { configureStore } from "@reduxjs/toolkit";
 import fieldReducer from "../src/utils/slices/fieldSlice";
-import gameModeReducer from "./utils/slices/GameModeSlice";
 import visibilitySettingsReducer from "./utils/slices/visibilitySettingsSlice";
+import visibilityRulesReducer from "./utils/slices/visibilityRulesSlice";
 import playingFieldReducer from "./utils/slices/playingFieldSlice";
 import arrayNumbersReducer from "./utils/slices/arrayNumbersSlice";
 import theadReducer from "./utils/slices/theadSlice";
 import innerWidthReducer from "./utils/slices/innerWidthSlice";
+import timerReducer from "./utils/slices/timerSlice";
 
 export const store = configureStore({
   reducer: {
     field: fieldReducer,
-    gameMode: gameModeReducer,
     visibilitySettings: visibilitySettingsReducer,
+    visibilityRules: visibilityRulesReducer,
     playingField: playingFieldReducer,
     arrayNumbers: arrayNumbersReducer,
     thead: theadReducer,
     innerWidth: innerWidthReducer,
+    timer: timerReducer,
   },
 });
 

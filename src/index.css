@@ -23,6 +23,13 @@ body {
   overflow: hidden;
 }
 
+button {
+  font-family: "Montserrat", sans-serif;
+  line-height: 1.5;
+  font-weight: 500;
+  font-optical-sizing: auto;
+}
+
 @font-face {
   font-family: "Montserrat";
   src: url("../public/font/Montserrat-Italic-VariableFont_wght.ttf") format("truetype");

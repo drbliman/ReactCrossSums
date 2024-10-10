@@ -9,12 +9,6 @@ export const SVG_SRC = {
   play: "../public/svg/play.svg",
 };
 
-export const GAME_MODE = {
-  mode_1: "sum",
-  mode_2: "subtraction",
-  mode_3: "multiplication",
-};
-
 export const LANGUAGES = {
   ru: { code: "ru", label: "RU" },
   en: { code: "en", label: "EN" },

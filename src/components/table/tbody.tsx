@@ -15,11 +15,6 @@ export default function Tbody({
 }: TbodyProps) {
   const { state, setState } = React.useContext(StateContext);
 
-  const [firstStates, setThStates] = React.useState({
-    thRowFirstStates: arrayNumbers.map(() => false),
-    thColumnFirstStates: arrayNumbers.map(() => false),
-  });
-
   const thColumnFirst = useSelector((state: RootState) => state.thead);
   const dispatch = useDispatch();
 
@@ -69,23 +64,20 @@ export default function Tbody({
         );
       }, 0);
 
-      setTimeout(
-        () => console.log(checkWinner(arrayBoolean, newResultStates)),
-        0,
-      );
-
       return {
+        ...prevState,
         cellStates: newCellStates,
         resultStates: newResultStates,
         rowIndex: rowIndex,
         cellIndex: cellIndex,
+        win: checkWinner(arrayBoolean, newResultStates),
       };
     });
   };
 
   React.useEffect(() => {
     console.log(state);
-    setThStates((prevState) => {
+    setState((prevState) => {
       const newStates = prevState.thRowFirstStates.map((value, index) => {
         return index === state.rowIndex
           ? checkRow({ arrayNumbers, numbers, state })
@@ -94,9 +86,20 @@ export default function Tbody({
 
       return { ...prevState, thRowFirstStates: newStates };
     });
-  }, [arrayNumbers, numbers, state]);
+  }, [arrayNumbers, numbers, state.resultStates]);
 
   if (state.cellStates.length === 0 || state.resultStates.length === 0) {
+    return null;
+  }
+
+  if (!arrayNumbers || !state.cellStates || !state.resultStates) {
+    return null;
+  }
+
+  if (
+    state.cellStates.length !== arrayNumbers.length ||
+    state.resultStates.length !== arrayNumbers.length
+  ) {
     return null;
   }
 
@@ -106,7 +109,7 @@ export default function Tbody({
         {arrayNumbers.map((elem, rowIndex) => (
           <tr key={`tr${rowIndex}_${elem}`}>
             <th
-              className={`${styles.th_one} ${firstStates.thRowFirstStates[rowIndex] ? styles.active : ""}`}
+              className={`${styles.th_one} ${state.thRowFirstStates[rowIndex] ? styles.active : ""}`}
               key={`th${rowIndex}_${elem}`}
             >
               {numbers[rowIndex]}

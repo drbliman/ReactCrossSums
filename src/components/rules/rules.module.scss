@@ -1,0 +1,149 @@
+.rulse_container {
+  position: absolute;
+  top: -100%;
+  width: 95%;
+  max-width: 769px;
+  min-width: 310px;
+  max-height: calc(100vh - 7rem);
+  background-color: #191c21;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  transition: 0.5s;
+
+  &.active {
+    top: 5rem;
+  }
+}
+
+.img_cross {
+  width: 3rem;
+  height: 3rem;
+  margin: 1rem;
+  display: flex;
+  align-self: flex-end;
+  margin: 1rem 1rem 0 0;
+
+  @media (max-width: 400px)  {
+    width: 2rem;
+    height: 2rem;
+    margin: 0.5rem;
+  }
+  
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      cursor: pointer;
+      animation-name: swaying;
+      animation-duration: 0.4s;
+    }
+  }
+}
+
+.rulse_title1 {
+  font-size: 2rem;
+}
+
+.rulse_title2,
+.rulse_title2_1 {
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: left;
+  margin: 1rem;
+}
+
+.rulse_title2_1 {
+  width: calc(100% - 4rem);
+  margin: 0 0 0 1rem;
+}
+
+.rulse_hidden {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.th_one,
+.th_one_active {
+  width: 2rem;
+  height: 2rem;
+  background-color: #000000;
+  border: 2px solid #191c21;
+  border-radius: 0.5rem;
+  user-select: none;
+}
+
+.th_one_active {
+  border: 2px solid #58c4dc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.th,
+.th_1 {
+  width: 2rem;
+  height: 2rem;
+  background-color: rgb(51,58,69);
+  border: 2px solid #333a45;
+  border-radius: 0.5rem;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  font-weight: 500;
+}
+
+.th_1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.active {
+    margin-left: 0.3rem;
+  }
+}
+
+.th_none,
+.th_active {
+  display: flex;
+  width: 2rem;
+  height: 2rem;
+  background-color: rgba(51,58,69, 0.3);
+  border: 2px solid rgba(51,58,69, 0.3);
+  color: gray;
+  border-radius: 0.5rem;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+
+  &.active {
+    margin-left: 0.3rem;
+  }
+}
+
+.th_active {
+  color: white;
+  background-color: rgb(51,58,69);
+  border: 2px solid #58c4dc;
+}
+
+.table_part_1 {
+  display: flex;
+  justify-content: center;
+
+  &.active {
+    margin: 1rem;
+  }
+}
+
+.line {
+  height: 1px;
+  width: calc(100% - 2rem);
+  background-color: gray;
+  border-radius: 1px;
+  margin: 1rem;
+}
+
+.rulse_container_1 {
+  display: flex;
+  margin: 1rem;
+}
