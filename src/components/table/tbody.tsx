@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 import { setThead } from "../../utils/slices/theadSlice";
 import { StateContext } from "../playingField/playingField";
+import musicClick from "../../../public/sound/click.wav";
+import musicWin from "../../../public/sound/win.wav";
 
 export default function Tbody({
   numbersCheck,
@@ -16,7 +18,11 @@ export default function Tbody({
   const { state, setState } = React.useContext(StateContext);
 
   const thColumnFirst = useSelector((state: RootState) => state.thead);
+  const music = useSelector((state: RootState) => state.music.music);
   const dispatch = useDispatch();
+
+  const musicCl = new Audio(musicClick);
+  const musicW = new Audio(musicWin);
 
   const arrayBoolean = useSelector(
     (state: RootState) => state.arrayNumbers.arrayBoolean,
@@ -24,9 +30,12 @@ export default function Tbody({
 
   React.useEffect(() => {
     dispatch(setThead(arrayNumbers.map(() => false)));
-  }, [arrayNumbers]);
+  }, [arrayNumbers]); // eslint-disable-line
 
   const handleCellClick = (rowIndex: number, cellIndex: number) => {
+    if (music) {
+      musicCl.play();
+    }
     setState((prevState) => {
       const newCellStates = prevState.cellStates.map((row) => [...row]);
       const newResultStates = prevState.resultStates.map((row) => [...row]);
@@ -76,6 +85,12 @@ export default function Tbody({
   };
 
   React.useEffect(() => {
+    if (state.win && music) {
+      musicW.play();
+    }
+  }, [state.win]);
+
+  React.useEffect(() => {
     console.log(state);
     setState((prevState) => {
       const newStates = prevState.thRowFirstStates.map((value, index) => {
@@ -86,7 +101,7 @@ export default function Tbody({
 
       return { ...prevState, thRowFirstStates: newStates };
     });
-  }, [arrayNumbers, numbers, state.resultStates]);
+  }, [arrayNumbers, numbers, state.resultStates]); // eslint-disable-line
 
   if (state.cellStates.length === 0 || state.resultStates.length === 0) {
     return null;

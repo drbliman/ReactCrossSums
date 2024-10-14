@@ -1,13 +1,17 @@
-import Header from "./components/head/header";
+// import Header from "./components/head/header";
 import Settings from "./components/settings/settings";
 import PlayingField from "./components/playingField/playingField";
 import Rules from "./components/rules/rules";
 import "./App.css";
 
 export default function App() {
+  // YaGames.init().then((ysdk) => {
+  //   console.log("Yandex SDK initialized");
+  //   window.ysdk = ysdk;
+  // });
   return (
     <>
-      <Header></Header>
+      {/* <Header></Header> */}
       <Settings></Settings>
       <Rules></Rules>
       <PlayingField></PlayingField>

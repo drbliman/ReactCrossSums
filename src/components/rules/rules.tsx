@@ -2,9 +2,9 @@ import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 import { setVisibilityRules } from "../../utils/slices/visibilityRulesSlice";
-import { SVG_SRC } from "../../utils/constants";
 import styles from "./rules.module.scss";
 import RulesTable_1 from "./rulseTable_1";
+import Svg from "../svg/svg";
 
 export default function Rules() {
   const { t } = useTranslation();
@@ -24,12 +24,7 @@ export default function Rules() {
       <div
         className={`${styles.rulse_container} ${visibilityRules === true ? styles.active : ""}`}
       >
-        <img
-          className={styles.img_cross}
-          src={SVG_SRC.cross}
-          alt="cross"
-          onClick={() => handleVisibilityRules()}
-        />
+        <Svg name="cross" onClick={handleVisibilityRules}></Svg>
         <div className={styles.rulse_title1}>{t("rules")}</div>
         <div className={styles.rulse_hidden}>
           <div className={styles.rulse_title2}>{t("rules_part_1")}</div>

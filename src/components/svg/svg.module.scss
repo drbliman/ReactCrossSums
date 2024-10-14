@@ -1,0 +1,48 @@
+.img,
+.img_cross,
+.img_play {
+  position: relative;
+  width: 3rem;
+  height: 3rem;
+  margin: 1rem;
+  object-fit: contain;
+
+  @media (max-width: 400px)  {
+    width: 2rem;
+    height: 2rem;
+    margin: 0.5rem;
+  }
+  
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      cursor: pointer;
+      animation-name: swaying;
+      animation-duration: 0.4s;
+    }
+  }
+}
+
+.img_cross {
+  display: flex;
+  align-self: flex-end;
+  margin: 1rem 1rem 0 0;
+}
+
+.img_play {
+  margin: 0;
+}
+
+@keyframes swaying {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+  33% {
+    transform: rotate(20deg);
+  }
+  66% {
+    transform: rotate(-20deg);
+  }
+}

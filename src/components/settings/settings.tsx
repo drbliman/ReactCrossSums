@@ -1,6 +1,5 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { SVG_SRC } from "../../utils/constants";
 import { useSelector, useDispatch } from "react-redux";
 import { setField } from "../../utils/slices/fieldSlice";
 import { RootState } from "../../store";
@@ -10,6 +9,7 @@ import { setlimitatiomNumders } from "../../utils/slices/innerWidthSlice";
 import { setNegativeNumbers } from "../../utils/slices/innerWidthSlice";
 import { setPlayingField } from "../../utils/slices/playingFieldSlice";
 import { LANGUAGES } from "../../utils/constants";
+import Svg from "../svg/svg";
 
 export default function Settings() {
   const { t, i18n } = useTranslation();
@@ -63,12 +63,7 @@ export default function Settings() {
       <div
         className={`${styles.settings_container} ${visibilitySettings === true ? styles.active : ""}`}
       >
-        <img
-          className={styles.img_cross}
-          src={SVG_SRC.cross}
-          alt="cross"
-          onClick={() => handleVisibilitySettings()}
-        />
+        <Svg name="cross" onClick={handleVisibilitySettings}></Svg>
         <div className={styles.settings_title1}>{t("settings")}</div>
         <div className={styles.settings_hidden}>
           <div className={styles.settings_title2}>{t("language")}</div>

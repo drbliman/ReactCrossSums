@@ -12,6 +12,30 @@ export default function checkColumn({
   return sum === numbersCheck[state.cellIndex];
 }
 
+export function checkAllColumns({
+  arrayNumbers,
+  numbersCheck,
+  resultStates,
+}: CheckAllColumnsArgs): boolean[] {
+  const columnCount = arrayNumbers[0].length;
+
+  return Array.from({ length: columnCount }, (_, colIndex) => {
+    let sum = 0;
+    for (let rowIndex = 0; rowIndex < arrayNumbers.length; rowIndex += 1) {
+      if (resultStates[rowIndex][colIndex]) {
+        sum += arrayNumbers[rowIndex][colIndex];
+      }
+    }
+    return sum === numbersCheck[colIndex];
+  });
+}
+
+interface CheckAllColumnsArgs {
+  arrayNumbers: number[][];
+  numbersCheck: number[];
+  resultStates: boolean[][];
+}
+
 interface CheckArgs {
   arrayNumbers: number[][];
   numbersCheck: number[];

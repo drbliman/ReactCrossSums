@@ -6,7 +6,7 @@
   width: 95%;
   max-width: 769px;
   min-width: 320px;
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 .table_conteiner {
@@ -21,24 +21,10 @@
   display: block;
   width: 3rem;
   height: 3rem;
-  margin: 1rem;
+  padding: -1rem;
 
   &.none {
     display: none;
-  }
-
-  @media (max-width: 400px)  {
-    width: 2rem;
-    height: 2rem;
-    margin: 0.5rem;
-  }
-  
-  @media (hover: hover) and (pointer: fine) {
-    &:hover {
-      cursor: pointer;
-      animation-name: swaying;
-      animation-duration: 0.4s;
-    }
   }
 }
 
@@ -50,9 +36,9 @@
     display: none;
   }
 
-  @media (max-width: 769px)  {
-    flex-direction: column;
-  }
+  // @media (max-width: 769px)  {
+  //   flex-direction: column;
+  // }
 }
 
 .button {
@@ -66,6 +52,12 @@
   font-size: 1rem;
   transition: 0.3s;
   -webkit-tap-highlight-color: transparent;
+  color: white;
+
+  @media (max-width: 400px)  {
+    margin: 0.5rem;
+    padding: 0 1rem;
+  }
 
   @media (hover: hover) and (pointer: fine) {
     &:hover {
@@ -83,7 +75,9 @@
   }
 
   &.disabled {
+    color: gray;
     cursor: auto;
+    background-color: #191c21;
 
     @media (hover: hover) and (pointer: fine) {
       &:hover {
@@ -95,20 +89,5 @@
       border: 2px solid #191c21;
       transition: 0.05s;
     }
-  }
-}
-
-@keyframes swaying {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(0deg);
-  }
-  33% {
-    transform: rotate(20deg);
-  }
-  66% {
-    transform: rotate(-20deg);
   }
 }

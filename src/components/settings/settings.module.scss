@@ -4,15 +4,21 @@
   width: 95%;
   max-width: 769px;
   min-width: 310px;
-  max-height: calc(100vh - 7rem);
+  max-height: calc(100dvh - 7rem);
   background-color: #191c21;
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
   transition: 0.5s;
+  z-index: 1;
 
   &.active {
     top: 5rem;
+
+    @media (max-width: 400px)  {
+      top: 3rem;
+      max-height: calc(100dvh - 5rem);
+    }
   }
 }
 
@@ -105,6 +111,7 @@
 }
 
 .header {
+  position: relative;
   display: flex;
   flex-direction: row;
   min-width: 320px;
@@ -114,44 +121,31 @@
   }
 }
 
-.img,
-.img_cross {
-  width: 3rem;
-  height: 3rem;
-  margin: 1rem;
+.quantityClue {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  width: 1rem;
+  height: 1rem;
+  font-size: 0.7rem;
+  background-color: #191c21;
+  border-radius: 0.2rem;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 
   @media (max-width: 400px)  {
-    width: 2rem;
-    height: 2rem;
-    margin: 0.5rem;
-  }
-  
-  @media (hover: hover) and (pointer: fine) {
-    &:hover {
-      cursor: pointer;
-      animation-name: swaying;
-      animation-duration: 0.4s;
-    }
+    right: 0.5rem;
+    bottom: 0;
   }
 }
 
-.img_cross {
-  display: flex;
-  align-self: flex-end;
-  margin: 1rem 1rem 0 0;
-}
-
-@keyframes swaying {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(0deg);
-  }
-  33% {
-    transform: rotate(20deg);
-  }
-  66% {
-    transform: rotate(-20deg);
+.idea_container {
+  &.disabled {
+    cursor: auto;
+    pointer-events: none;
+    opacity: 0.5;
   }
 }

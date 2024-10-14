@@ -8,7 +8,6 @@ import {
 } from "../../utils/slices/arrayNumbersSlice";
 import { useTranslation } from "react-i18next";
 import { RootState } from "../../store";
-import { SVG_SRC } from "../../utils/constants";
 import { LIMITATION_NUMBERS } from "../../utils/constants";
 import Table from "../table/table";
 import styles from "./playingField.module.scss";
@@ -17,7 +16,11 @@ import createGameBoolean from "../../utils/gameNumbers/createGameBoolean";
 import sumColumnsAndRows from "../../utils/gameNumbers/sumColumnsAndRows";
 import { setInnerWidth } from "../../utils/slices/innerWidthSlice";
 import { setThead } from "../../utils/slices/theadSlice";
-// import { setTimer } from "../../utils/slices/timerSlice";
+import Svg from "../svg/svg";
+import { useYandexSDK } from "../../utils/YandexSDKContext";
+import Header from "../head/header";
+// import backgroundMusic from "../../../public/sound/background.wav";
+// import { setMusic } from "../../utils/slices/musicSlice";
 
 interface StateType {
   cellStates: string[][];
@@ -47,6 +50,21 @@ export const StateContext = React.createContext<{
 
 export default function PlayingField() {
   const { t } = useTranslation();
+  // const music = useSelector((state: RootState) => state.music.music);
+  // const musicBackground = new Audio(backgroundMusic);
+
+  const ysdk = useYandexSDK();
+  const showAd = () => {
+    if (ysdk && ysdk.adv) {
+      ysdk.adv
+        .showFullscreenAdv()
+        .then(() => console.log("Ad shown successfully"))
+        .catch((err: any) => console.error("Failed to show ad", err)); // eslint-disable-line
+    } else {
+      console.error("Yandex SDK is not initialized");
+    }
+  };
+
   const playingField = useSelector(
     (state: RootState) => state.playingField.playingField,
   );
@@ -68,7 +86,7 @@ export default function PlayingField() {
   const negativeNumbers = useSelector(
     (state: RootState) => state.innerWidth.negativeNumbers,
   );
-  // const timer = useSelector((state: RootState) => state.timer.timer);
+  // const music = useSelector((state: RootState) => state.music.music);
   const fieldSize = useSelector((state: RootState) => state.field.size);
   const dispatch = useDispatch();
 
@@ -82,9 +100,8 @@ export default function PlayingField() {
     win: false,
   });
 
-  // let timerIdRef = React.useRef<number | null>(null);
-
   const handleClickPlay = () => {
+    // musicBackground.play();
     dispatch(setPlayingField(playingField ? true : true));
     dispatch(
       setArrayNumbers(
@@ -96,13 +113,8 @@ export default function PlayingField() {
       ),
     );
     dispatch(setArrayBoolean(createGameBoolean(fieldSize)));
+    showAd();
   };
-
-  // React.useEffect(() => {
-  //   timerIdRef = setInterval(() => {
-  //     dispatch(setTimer(timer + 1));
-  //   }, 1000);
-  // }, [timer]);
 
   const handleClickReset = () => {
     resetStateDefault();
@@ -145,11 +157,19 @@ export default function PlayingField() {
     console.log(arrayBoolean);
     dispatch(setArrayAnswers(sumColumnsAndRows(arrayNumbers, arrayBoolean)));
     resetStateDefault();
-  }, [arrayNumbers, arrayBoolean, dispatch, playingField]);
+  }, [arrayNumbers, arrayBoolean, dispatch, playingField]); // eslint-disable-line
 
   React.useEffect(() => {
     console.log(arrayAnswers);
   }, [arrayAnswers]);
+
+  // React.useEffect(() => {
+  //   if (music) {
+  //     musicBackground.play();
+  //   } else {
+  //     musicBackground.pause();
+  //   }
+  // }, [music]);
 
   React.useEffect(() => {
     dispatch(
@@ -159,24 +179,18 @@ export default function PlayingField() {
           : LIMITATION_NUMBERS.limit_2,
       ),
     );
-  }, []);
+  }, []); // eslint-disable-line
 
   return (
     <>
       <StateContext.Provider value={{ state, setState }}>
+        <Header></Header>
         <div className={styles.playingField}>
-          <img
+          <div
             className={`${styles.imgPlay} ${playingField ? styles.none : ""}`}
-            src={SVG_SRC.play}
-            alt="play"
-            onClick={() => handleClickPlay()}
-          />
-          {/* <div
-            className={`${styles.table_conteiner} ${!playingField ? styles.none : ""}`}
           >
-            <div>{`${t("time")}:`}</div>
-            <div>{timer}</div>
-          </div> */}
+            <Svg name="play" onClick={handleClickPlay}></Svg>
+          </div>
           <div
             className={`${styles.table_conteiner} ${!playingField ? styles.none : ""}`}
           >

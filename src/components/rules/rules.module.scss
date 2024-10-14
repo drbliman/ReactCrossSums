@@ -4,15 +4,25 @@
   width: 95%;
   max-width: 769px;
   min-width: 310px;
-  max-height: calc(100vh - 7rem);
+  max-height: calc(100dvh - 7rem);
   background-color: #191c21;
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
   transition: 0.5s;
+  z-index: 1;
 
   &.active {
     top: 5rem;
+
+    @media (max-width: 400px)  {
+      top: 3rem;
+      max-height: calc(100dvh - 5rem);
+    }
+  }
+
+  @media (min-width: 600px)  {
+    width: 150%;
   }
 }
 
@@ -41,6 +51,10 @@
 
 .rulse_title1 {
   font-size: 2rem;
+
+  @media (max-width: 400px)  {
+    font-size: 1.2rem;
+  }
 }
 
 .rulse_title2,

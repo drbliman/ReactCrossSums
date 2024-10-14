@@ -19,9 +19,8 @@ export default function Table() {
     }
   }, [arrayAnswers]);
 
-  //TODO: loader
   if (loader) {
-    return <p>Загрузка игрового поля...</p>;
+    return <p>loader</p>;
   }
 
   return (

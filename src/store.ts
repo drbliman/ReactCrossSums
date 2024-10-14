@@ -6,7 +6,7 @@ import playingFieldReducer from "./utils/slices/playingFieldSlice";
 import arrayNumbersReducer from "./utils/slices/arrayNumbersSlice";
 import theadReducer from "./utils/slices/theadSlice";
 import innerWidthReducer from "./utils/slices/innerWidthSlice";
-import timerReducer from "./utils/slices/timerSlice";
+import musicReducer from "./utils/slices/musicSlice";
 
 export const store = configureStore({
   reducer: {
@@ -17,7 +17,7 @@ export const store = configureStore({
     arrayNumbers: arrayNumbersReducer,
     thead: theadReducer,
     innerWidth: innerWidthReducer,
-    timer: timerReducer,
+    music: musicReducer,
   },
 });
 
