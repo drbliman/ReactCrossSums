@@ -10,6 +10,9 @@ export interface YaGamesSDK {
   adv: {
     showFullscreenAdv: () => Promise<void>;
   };
+  features: {
+    LoadingAPI;
+  };
 }
 
 export {};

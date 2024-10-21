@@ -16,11 +16,14 @@ import createGameBoolean from "../../utils/gameNumbers/createGameBoolean";
 import sumColumnsAndRows from "../../utils/gameNumbers/sumColumnsAndRows";
 import { setInnerWidth } from "../../utils/slices/innerWidthSlice";
 import { setThead } from "../../utils/slices/theadSlice";
+import { setPlayingFieldFirst } from "../../utils/slices/playingFieldSlice";
 import Svg from "../svg/svg";
 import { useYandexSDK } from "../../utils/YandexSDKContext";
 import Header from "../head/header";
-// import backgroundMusic from "../../../public/sound/background.wav";
-// import { setMusic } from "../../utils/slices/musicSlice";
+import updateStates from "../../utils/updateStates";
+import checkWinner from "../../utils/gameNumbers/checkWinner";
+import { checkAllColumns } from "../../utils/gameNumbers/checkColumn";
+import { checkAllRows } from "../../utils/gameNumbers/checkRow";
 
 interface StateType {
   cellStates: string[][];
@@ -50,32 +53,78 @@ export const StateContext = React.createContext<{
 
 export default function PlayingField() {
   const { t } = useTranslation();
-  // const music = useSelector((state: RootState) => state.music.music);
-  // const musicBackground = new Audio(backgroundMusic);
+
+  const playerRef = React.useRef<any | null>(null); // eslint-disable-line
+  const [quantityClue, setQuantityClue] = React.useState(0);
 
   const ysdk = useYandexSDK();
   const showAd = () => {
     if (ysdk && ysdk.adv) {
-      ysdk.adv
-        .showFullscreenAdv()
-        .then(() => console.log("Ad shown successfully"))
-        .catch((err: any) => console.error("Failed to show ad", err)); // eslint-disable-line
+      ysdk.adv.showFullscreenAdv({
+        callbacks: {
+          onOpen: function () {
+            if (ysdk?.features?.LoadingAPI) {
+              ysdk.features.GameplayAPI.stop();
+            }
+          },
+          onClose: function () {
+            if (ysdk?.features?.LoadingAPI) {
+              ysdk.features.GameplayAPI.start();
+            }
+          },
+          onError: function (error: Error) {
+            console.error("Error displaying ad:", error.message);
+            if (ysdk?.features?.LoadingAPI) {
+              ysdk.features.GameplayAPI.start();
+            }
+          },
+          onOffline: function () {
+            console.warn("No internet connection");
+            if (ysdk?.features?.LoadingAPI) {
+              ysdk.features.GameplayAPI.start();
+            }
+          },
+        },
+      });
     } else {
       console.error("Yandex SDK is not initialized");
     }
   };
 
+  React.useEffect(() => {
+    if (ysdk && ysdk.getPlayer) {
+      ysdk
+        .getPlayer({ scopes: false })
+        .then((_player: Promise<object>) => {
+          playerRef.current = _player;
+          playerRef.current.getStats(["clue_x02"]).then((stats: any) => { // eslint-disable-line
+            if (stats.clue_x02 === undefined) {
+              playerRef.current.setStats({ clue_x02: 3 });
+              setQuantityClue(3);
+            } else {
+              setQuantityClue(stats.clue_x02);
+            }
+          });
+        })
+        .catch((err: Promise<object>) => {
+          console.log(err);
+        });
+    } else {
+      console.error("Yandex SDK is not initialized");
+    }
+  }, [ysdk]);
+
   const playingField = useSelector(
     (state: RootState) => state.playingField.playingField,
+  );
+  const playingFieldFirst = useSelector(
+    (state: RootState) => state.playingField.playingFieldFirst,
   );
   const arrayNumbers = useSelector(
     (state: RootState) => state.arrayNumbers.arrayNumbers,
   );
   const arrayBoolean = useSelector(
     (state: RootState) => state.arrayNumbers.arrayBoolean,
-  );
-  const arrayAnswers = useSelector(
-    (state: RootState) => state.arrayNumbers.arrayAnswers,
   );
   const innerWidth = useSelector(
     (state: RootState) => state.innerWidth.innerWidth,
@@ -86,7 +135,9 @@ export default function PlayingField() {
   const negativeNumbers = useSelector(
     (state: RootState) => state.innerWidth.negativeNumbers,
   );
-  // const music = useSelector((state: RootState) => state.music.music);
+  const arrayAnswers = useSelector(
+    (state: RootState) => state.arrayNumbers.arrayAnswers,
+  );
   const fieldSize = useSelector((state: RootState) => state.field.size);
   const dispatch = useDispatch();
 
@@ -100,8 +151,21 @@ export default function PlayingField() {
     win: false,
   });
 
+  React.useEffect(() => {
+    if (playingFieldFirst) {
+      setPlayingFieldFirst(!playingFieldFirst);
+      window.YaGames.init()
+        .then((ysdk) => {
+          ysdk.features.LoadingAPI?.ready();
+        })
+        .catch(console.error);
+    }
+  }, []); // eslint-disable-line
+
   const handleClickPlay = () => {
-    // musicBackground.play();
+    if (ysdk?.features?.LoadingAPI) {
+      ysdk.features.GameplayAPI.start();
+    }
     dispatch(setPlayingField(playingField ? true : true));
     dispatch(
       setArrayNumbers(
@@ -121,24 +185,24 @@ export default function PlayingField() {
     dispatch(setThead(arrayNumbers.map(() => false)));
   };
 
-  const handleClickSolution = () => {
-    if (!state.win) {
-      setState({
-        cellStates: arrayBoolean.map((row) =>
-          row.map((elem) => (elem ? "active" : "none")),
-        ),
-        resultStates: arrayBoolean.map((row) => row.map((elem) => elem)),
-        rowIndex: 0,
-        cellIndex: 0,
-        thRowFirstStates: arrayNumbers.map(() => true),
-        thColumnFirstStates: arrayNumbers.map(() => true),
-        win: true,
-      });
-      dispatch(setThead(arrayNumbers.map(() => true)));
-    } else {
-      handleClickPlay();
-    }
-  };
+  // const handleClickSolution = () => {
+  //   if (!state.win) {
+  //     setState({
+  //       cellStates: arrayBoolean.map((row) =>
+  //         row.map((elem) => (elem ? "active" : "none")),
+  //       ),
+  //       resultStates: arrayBoolean.map((row) => row.map((elem) => elem)),
+  //       rowIndex: 0,
+  //       cellIndex: 0,
+  //       thRowFirstStates: arrayNumbers.map(() => true),
+  //       thColumnFirstStates: arrayNumbers.map(() => true),
+  //       win: true,
+  //     });
+  //     dispatch(setThead(arrayNumbers.map(() => true)));
+  //   } else {
+  //     handleClickPlay();
+  //   }
+  // };
 
   function resetStateDefault() {
     setState({
@@ -153,23 +217,9 @@ export default function PlayingField() {
   }
 
   React.useEffect(() => {
-    console.log(arrayNumbers);
-    console.log(arrayBoolean);
     dispatch(setArrayAnswers(sumColumnsAndRows(arrayNumbers, arrayBoolean)));
     resetStateDefault();
   }, [arrayNumbers, arrayBoolean, dispatch, playingField]); // eslint-disable-line
-
-  React.useEffect(() => {
-    console.log(arrayAnswers);
-  }, [arrayAnswers]);
-
-  // React.useEffect(() => {
-  //   if (music) {
-  //     musicBackground.play();
-  //   } else {
-  //     musicBackground.pause();
-  //   }
-  // }, [music]);
 
   React.useEffect(() => {
     dispatch(
@@ -180,6 +230,74 @@ export default function PlayingField() {
       ),
     );
   }, []); // eslint-disable-line
+
+  const handleClickIdea = () => {
+    if (!state.win) {
+      if (quantityClue > 0) {
+        const newClue = quantityClue - 1;
+        setQuantityClue(newClue);
+        playerRef.current.incrementStats({ clue_x02: -1 });
+        const newState = updateStates(
+          arrayBoolean,
+          state.resultStates,
+          state.cellStates,
+        );
+        const rowArg = {
+          arrayNumbers: arrayNumbers,
+          numbers: arrayAnswers[1],
+          resultStates: newState.resultStates,
+        };
+        const colArg = {
+          arrayNumbers: arrayNumbers,
+          numbersCheck: arrayAnswers[0],
+          resultStates: newState.resultStates,
+        };
+        setState((prevState) => {
+          return {
+            ...prevState,
+            cellStates: newState.cellStates,
+            resultStates: newState.resultStates,
+            win: checkWinner(arrayBoolean, newState.resultStates),
+          };
+        });
+        setState((prevState) => {
+          const newStates_1 = checkAllRows(rowArg);
+          return { ...prevState, thRowFirstStates: newStates_1 };
+        });
+        dispatch(setThead(checkAllColumns(colArg)));
+      } else {
+        ysdk.adv.showRewardedVideo({
+          callbacks: {
+            onOpen: () => {
+              if (ysdk?.features?.LoadingAPI) {
+                ysdk.features.GameplayAPI.stop();
+              }
+            },
+            onClose: () => {
+              if (ysdk?.features?.LoadingAPI) {
+                ysdk.features.GameplayAPI.start();
+              }
+            },
+            onError: function (error: Error) {
+              console.error("Error displaying ad:", error.message);
+              if (ysdk?.features?.LoadingAPI) {
+                ysdk.features.GameplayAPI.start();
+              }
+            },
+            onRewarded: () => {
+              playerRef.current.incrementStats({ clue_x02: 3 });
+              setQuantityClue(3);
+              if (ysdk?.features?.LoadingAPI) {
+                ysdk.features.GameplayAPI.start();
+              }
+            },
+          },
+        });
+      }
+    } else {
+      handleClickPlay();
+    }
+  };
 
   return (
     <>
@@ -200,10 +318,14 @@ export default function PlayingField() {
             className={`${styles.button_conteiner} ${!playingField ? styles.none : ""}`}
           >
             <button
-              className={styles.button}
-              onClick={() => handleClickSolution()}
+              className={`${styles.button} ${quantityClue === 0 ? styles.height : ""}`}
+              onClick={() => handleClickIdea()}
             >
-              {state.win ? `${t("continue")}` : `${t("solution")}`}
+              {state.win
+                ? `${t("continue")}`
+                : quantityClue > 0
+                  ? `${t("clue")} (${quantityClue})`
+                  : t("advertisement")}
             </button>
             <button
               className={`${styles.button} ${state.win ? styles.disabled : ""}`}

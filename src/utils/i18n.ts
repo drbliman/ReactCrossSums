@@ -24,12 +24,12 @@ i18n
           numbers: "Числа",
           negativeNumbers: "Отрицательные числа",
           reset: "Сбросить",
-          solution: "Решение",
+          clue: "Подсказка",
           continue: "Продолжить",
-          time: "Время",
+          advertisement: "Смотреть рекламу для подсказок (+3)",
           rules: "Правила",
           rules_part_1:
-            "Цель игры — вычеркнуть числа в таблице так, чтобы сумма в каждой строке и каждом столбце совпадала с числами, указанными в шапке таблицы и в первом столбце.",
+            "Цель игры — вычеркнуть числа в таблице так, чтобы сумма оставшихся в каждой строке и каждом столбце совпадала с числами, указанными в шапке таблицы и в первом столбце.",
           rules_part_2:
             "Вы можете переводить каждое число в одно из трёх состояний:",
           rules_part_2_1:
@@ -58,12 +58,12 @@ i18n
           numbers: "Numbers",
           negativeNumbers: "Negative numbers",
           reset: "Reset",
-          solution: "Solution",
+          clue: "Clue",
           continue: "Continue",
-          time: "Time",
+          advertisement: "Watch advertisement for tips (+3)",
           rules: "Rules",
           rules_part_1:
-            "The goal of the game is to cross out numbers in the table so that the sum in each row and each column matches the numbers given in the table header and the first column.",
+            "The goal of the game is to cross out numbers in the table so that the sum of the numbers remaining in each row and each column matches the numbers given in the table header and the first column.",
           rules_part_2: "You can switch each number between three states:",
           rules_part_2_1:
             "If you are sure the number should be crossed out, you can mark it as 'crossed out'.",
@@ -90,12 +90,12 @@ i18n
           numbers: "Sayılar",
           negativeNumbers: "Negatif sayılar",
           reset: "Sıfırla",
-          solution: "Çözüm",
+          clue: "İpucu",
           continue: "Devam etmek",
-          time: "Zaman",
+          advertisement: "İpuçları için Vach reklamları (+3)",
           rules: "Tüzük",
           rules_part_1:
-            "Oyunun amacı, her satır ve sütundaki toplamın, tablonun üst kısmında ve ilk sütunda verilen sayılarla eşleşecek şekilde sayıları işaretlemektir.",
+            "Oyunun amacı, tabloda her satır ve sütunda kalan sayıların toplamının, tablo başlığında ve ilk sütunda verilen sayılarla eşleşecek şekilde sayıları elemek.",
           rules_part_2: "Her sayıyı üç duruma geçirebilirsiniz:",
           rules_part_2_1:
             "Sayının silinmesi gerektiğinden emin olduğunuzda, onu 'silindi' olarak işaretleyebilirsiniz.",

@@ -9,12 +9,14 @@ import { setThead } from "../../utils/slices/theadSlice";
 import { StateContext } from "../playingField/playingField";
 import musicClick from "../../../public/sound/click.wav";
 import musicWin from "../../../public/sound/win.wav";
+import { useYandexSDK } from "../../utils/YandexSDKContext";
 
 export default function Tbody({
   numbersCheck,
   numbers,
   arrayNumbers,
 }: TbodyProps) {
+  const ysdk = useYandexSDK();
   const { state, setState } = React.useContext(StateContext);
 
   const thColumnFirst = useSelector((state: RootState) => state.thead);
@@ -88,10 +90,12 @@ export default function Tbody({
     if (state.win && music) {
       musicW.play();
     }
-  }, [state.win]);
+    if (ysdk?.features?.LoadingAPI) {
+      ysdk.features.GameplayAPI.stop();
+    }
+  }, [state.win]); // eslint-disable-line
 
   React.useEffect(() => {
-    console.log(state);
     setState((prevState) => {
       const newStates = prevState.thRowFirstStates.map((value, index) => {
         return index === state.rowIndex
